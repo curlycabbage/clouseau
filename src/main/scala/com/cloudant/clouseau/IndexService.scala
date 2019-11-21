@@ -227,7 +227,16 @@ class IndexService(ctx: ServiceContext[IndexServiceArgs]) extends Service(ctx) w
       ctx.args.writer.rollback()
     } catch {
       case e: AlreadyClosedException => 'ignored
-      case e: IOException => warn("Error while closing writer", e)
+      case e: IOException =>
+        try {
+          ctx.args.writer.close();
+        } finally {
+          val dir = ctx.args.writer.getDirectory
+          if (IndexWriter.isLocked(dir)) {
+            IndexWriter.unlock(dir);
+          }
+        }
+        warn("Error while closing writer", e)
     } finally {
       super.exit(msg)
     }
