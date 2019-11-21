@@ -1,6 +1,7 @@
 You will need to create a file ~/.m2/toolchains.xml to build. Below is
 an example, you will likely only need to adjust the jdkHome line.
 
+```xml
 <?xml version="1.0" encoding="UTF8"?>
 <toolchains>
   <!-- JDK toolchains -->
@@ -15,3 +16,4 @@ an example, you will likely only need to adjust the jdkHome line.
     </configuration>
   </toolchain>
 </toolchains>
+```
